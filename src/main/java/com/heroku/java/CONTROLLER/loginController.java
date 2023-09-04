@@ -120,7 +120,7 @@ public class loginController {
 
                     System.out.println("fullname : "+fullname);
                     if(custemail.equals(email)
-                            && passwordEncoder.matches(password,custpassword)){
+                            && custpassword.equals(password)){
 
                             session.setAttribute("custid",userid);
                             session.setAttribute("custname",fullname);

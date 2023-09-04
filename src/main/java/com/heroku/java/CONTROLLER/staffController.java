@@ -32,9 +32,6 @@ public class staffController {
         this.dataSource = dataSource;
     }
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
     @GetMapping("/staffregister")
     public String staffregister(HttpSession session) {
         // int staffsid = (int) session.getAttribute("staffsid");
@@ -119,12 +116,12 @@ public class staffController {
 
     @PostMapping("/staffregister")
     public String addAccountStaff(HttpSession session, @ModelAttribute("staffregister") staff staff) {
-        // String fullname = (String) session.getAttribute("staffsname");
-        // int userid = (int) session.getAttribute("staffsid");
+        String fullname = (String) session.getAttribute("staffsname");
+        int userid = (int) session.getAttribute("staffsid");
 
         //debug
-        // System.out.println("fullname : "+fullname);
-        // System.out.println("userid : "+ userid);
+        System.out.println("fullname : "+fullname);
+        System.out.println("userid : "+ userid);
         try {
             Connection connection = dataSource.getConnection();
             String sql1 = "INSERT INTO staffs (staffsname, staffsemail, staffspassword, staffsrole,managersid) VALUES (?,?,?,?,?)";
@@ -234,21 +231,6 @@ public class staffController {
                 statement.setInt(5, staffsid);
                 statement.executeUpdate();
             System.out.println("debug= " + staffsid + " " + staffsname + " " + staffsrole + " " + staffsemail + " " + staffspassword);
-
-            // // Check if the staff has entered a new password
-            // if (!staffspassword.isEmpty()) {
-            //     // Hash the new password
-            //     String newpassword = passwordEncoder.encode(staffspassword);
-
-            //     // Update the staff's password in the database
-            //     String sql2 = "UPDATE staffs SET staffspassword=? WHERE staffsid=?";
-            //     final var passwordStatement = connection.prepareStatement(sql2);
-            //     passwordStatement.setString(1, newpassword);
-            //     passwordStatement.setInt(2, staffsid);
-            //     passwordStatement.executeUpdate();
-
-            // }
-
 
             connection.close();
 

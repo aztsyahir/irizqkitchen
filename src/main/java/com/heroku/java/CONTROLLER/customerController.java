@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -39,8 +37,8 @@ public class customerController {
         this.dataSource = dataSource;
     }
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    // @Autowired
+    // private BCryptPasswordEncoder passwordEncoder;
 
 
     @PostMapping("/customerregister")
@@ -58,7 +56,7 @@ public class customerController {
       
       statement1.setString(1, fullname);
       statement1.setString(2, email);
-      statement1.setString(3, passwordEncoder.encode(password));
+      statement1.setString(3, password);
       statement1.setString(4, custsaddress);
       statement1.setString(5, custsphone);
       statement1.executeUpdate();
@@ -145,31 +143,32 @@ public class customerController {
         
             try { 
             Connection connection = dataSource.getConnection();
-            String sql = "UPDATE customers SET custname=? ,custemail=?, custaddress=?, custphone=? WHERE custid=?";
+            String sql = "UPDATE customers SET custname=? ,custemail=?, custpassword=?, custaddress=?, custphone=? WHERE custid=?";
             
             final var statement = connection.prepareStatement(sql);
             statement.setString(1, custname);
             statement.setString(2, custemail);
-            statement.setString(3, custaddress);
-            statement.setString(4, custphone);
-            statement.setInt(5, custid);
+            statement.setString(3, custpassword);
+            statement.setString(4, custaddress);
+            statement.setString(5, custphone);
+            statement.setInt(6, custid);
             statement.executeUpdate();
             System.out.println("debug= "+custname+" "+custemail+" "+custpassword+" "+custphone+" "+custid);
             System.out.println("id database : " + custid);
                 
             // Check if the staff has entered a new password
-            if(!custpassword.isEmpty()){
-                // Hash the new password
-                String newpassword = passwordEncoder.encode(custpassword);
+            // if(!custpassword.isEmpty()){
+            //     // Hash the new password
+            //     String newpassword = passwordEncoder.encode(custpassword);
 
-            // Update the staff's password in the database
-            String sql2 = "UPDATE staffs SET staffspassword=? WHERE staffsid=?";
-            final var passwordStatement = connection.prepareStatement(sql2);
-            passwordStatement.setString(1, newpassword);
-            passwordStatement.setInt(2, custid);
-            passwordStatement.executeUpdate();
+            // // Update the staff's password in the database
+            // String sql2 = "UPDATE staffs SET staffspassword=? WHERE staffsid=?";
+            // final var passwordStatement = connection.prepareStatement(sql2);
+            // passwordStatement.setString(1, newpassword);
+            // passwordStatement.setInt(2, custid);
+            // passwordStatement.executeUpdate();
 
-            }
+            // }
             
             connection.close();
 
