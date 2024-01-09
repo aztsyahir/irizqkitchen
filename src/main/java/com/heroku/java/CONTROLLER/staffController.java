@@ -143,7 +143,7 @@ public class staffController {
             statement1.executeUpdate();
 
             connection.close();
-            return "redirect:/login";
+            return "redirect:/login?success=true";
 
         } catch (SQLException sqe) {
             System.out.println("Error Code = " + sqe.getErrorCode());
