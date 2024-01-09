@@ -48,7 +48,7 @@ public class loginController {
     }
 
     @PostMapping("/login")
-    public String Loginpage(HttpSession session, String email,String password, User user, Model model) {
+    public String Loginpage(@RequestParam(name = "success", required = false)Boolean success,HttpSession session, String email,String password, User user, Model model) {
     
         // String returnPage = null;
     
@@ -90,7 +90,7 @@ public class loginController {
                         System.out.println("admin name : " + fullname);
                         System.out.println("admin id: " + userid);
                         System.out.println("admin role: " + staffsrole);
-                         return "redirect:/stafforder";
+                         return "redirect:/stafforder?success=true";
 
                     } else if(staffsrole.equals("baker")){
                         
@@ -101,7 +101,7 @@ public class loginController {
                         System.out.println("staff name : " + fullname);
                         System.out.println("staff id: " + userid);
                         System.out.println("staff role: " + staffsrole);
-                         return "redirect:/stafforder";
+                         return "redirect:/stafforder?success=true";
                     }
                 }
             }
@@ -126,13 +126,13 @@ public class loginController {
                             session.setAttribute("custname",fullname);
                           
                             connection.close();
-                              return "redirect:/catalogue";
+                              return "redirect:/catalogue?success=true";
                     }
                 }
                 
             
             connection.close();
-             return "redirect:/login?error";
+             return "redirect:/login?success=false";
 
         }  catch (SQLException sqe) {
             System.out.println("Error Code = " + sqe.getErrorCode());

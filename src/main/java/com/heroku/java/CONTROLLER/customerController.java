@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heroku.java.MODEL.User;
 import com.heroku.java.MODEL.customer;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 // import java.util.ArrayList;
 // import java.util.Map;
@@ -65,7 +67,7 @@ public class customerController {
       System.out.println("phonenumber: "+custsphone);
 
       connection.close();
-      return "redirect:/login";
+      return "redirect:/login?success=true";
 
     } catch (SQLException sqe) {
       System.out.println("Error Code = " + sqe.getErrorCode());
@@ -74,15 +76,15 @@ public class customerController {
       System.out.println("printTrace /n");
       sqe.printStackTrace();
 
-      return "redirect:/userregister";
+      return "redirect:/userregister?success=false";
     } catch (Exception e) {
       System.out.println("E message : " + e.getMessage());
-      return "redirect:/userregister";
+      return "redirect:/userregister?success=false";
     }
     }
   
     @GetMapping("/custprofile")
-    public String viewprofile(HttpSession session, Model model, customer cust)
+    public String viewprofile(@RequestParam(name = "success", required = false)Boolean success, HttpSession session, Model model, customer cust)
     {
         String fullname = (String) session.getAttribute("custname");
         int userid = (int) session.getAttribute("custid");
@@ -155,30 +157,15 @@ public class customerController {
             statement.executeUpdate();
             System.out.println("debug= "+custname+" "+custemail+" "+custpassword+" "+custphone+" "+custid);
             System.out.println("id database : " + custid);
-                
-            // Check if the staff has entered a new password
-            // if(!custpassword.isEmpty()){
-            //     // Hash the new password
-            //     String newpassword = passwordEncoder.encode(custpassword);
-
-            // // Update the staff's password in the database
-            // String sql2 = "UPDATE staffs SET staffspassword=? WHERE staffsid=?";
-            // final var passwordStatement = connection.prepareStatement(sql2);
-            // passwordStatement.setString(1, newpassword);
-            // passwordStatement.setInt(2, custid);
-            // passwordStatement.executeUpdate();
-
-            // }
             
             connection.close();
 
-            String returnPage = "custprofile"; 
-            return returnPage; 
+           return "redirect:/custprofile?success=true";  
     
             } catch (Throwable t) { 
                 System.out.println("message : " + t.getMessage()); 
                 System.out.println("error");
-                return "redirect:/custprofile"; 
+                return "redirect:/custprofile?success=false"; 
             } }
 
             //delete cust controller
@@ -189,29 +176,34 @@ public class customerController {
 
             if (fullname != null) {
                 try (Connection connection = dataSource.getConnection()) {
-                    // Delete customer record
-                    final var deleteCustomerStatement = connection.prepareStatement("DELETE FROM customers WHERE custid=?");
-                    deleteCustomerStatement.setInt(1, userid);
-                    int customerRowsAffected = deleteCustomerStatement.executeUpdate();
+                    // Check if the customer has associated orders
+            PreparedStatement checkOrdersStatement = connection.prepareStatement("SELECT COUNT(*) FROM orders WHERE custid = ?");
+            checkOrdersStatement.setInt(1, userid);
+            ResultSet ordersResultSet = checkOrdersStatement.executeQuery();
+            ordersResultSet.next(); // Move the cursor to the first row
+            int orderCount = ordersResultSet.getInt(1);
+            if (orderCount > 0) {
+                // Customer has associated orders, prevent deletion
+                // You can redirect to a page indicating that the customer cannot be deleted due to active orders
+                return "redirect:/custprofile?success=false";
+            }
 
-                    //debug delete
-                    System.out.println("done delete");
-                    
-                    if (customerRowsAffected > 0) {
-                        // Deletion successful
-                        // You can redirect to a success page or perform any other desired actions
-                        session.invalidate();
-                        connection.close();
-                        return "redirect:/";
-                    } else {
-                        // Deletion failed
-                        // You can redirect to an error page or perform any other desired actions
-                        System.out.println("Delete Failed");
-                        connection.close();
-                        return "redirect:/custprofile";
-                    }
-                    
-                } catch (SQLException e) {
+            // No associated orders, proceed with customer deletion
+            PreparedStatement deleteCustomerStatement = connection.prepareStatement("DELETE FROM customers WHERE custid=?");
+            deleteCustomerStatement.setInt(1, userid);
+            int customerRowsAffected = deleteCustomerStatement.executeUpdate();
+
+            if (customerRowsAffected > 0) {
+                // Deletion successful
+                session.invalidate();
+                connection.close();
+                return "redirect:/";
+            } else {
+                // Deletion failed
+                return "redirect:/custprofile?error=deleteFailed";
+            }
+        } 
+                catch (SQLException e) {
                     // Handle any potential exceptions (e.g., log the error, display an error page)
                     e.printStackTrace();
                     

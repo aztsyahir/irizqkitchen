@@ -49,7 +49,7 @@ public class OrderController {
     }
     
     @GetMapping("/catalogue")
-          public String catalogue(HttpSession session, Model model ,Cakes cake,Cupcakes cupcake) {
+          public String catalogue(@RequestParam(name = "success", required = false)Boolean success,HttpSession session, Model model ,Cakes cake,Cupcakes cupcake) {
               session.getAttribute("custid");
                 List<Cakes> cakes = new ArrayList<>();
                 List<Cupcakes> cupcakes = new ArrayList<>();
@@ -57,7 +57,7 @@ public class OrderController {
                 try {
                   System.out.println("pass connection first");
                   Connection connection = dataSource.getConnection();
-                  String sql = "SELECT proid,proname,protype,proprice,proimg FROM products ORDER BY proname";
+                  String sql = "SELECT proid,proname,protype,proprice,proimg FROM products ORDER BY proid";
                   final var statement = connection.createStatement();
                   final var resultSet = statement.executeQuery(sql);
         
@@ -252,7 +252,7 @@ public class OrderController {
       }
       
       @GetMapping("/stafforder")
-      public String stafforder(HttpSession session,Model model,orderstaff orderstaff) {
+      public String stafforder(@RequestParam(name = "success", required = false)Boolean success, HttpSession session,Model model,orderstaff orderstaff) {
           if (session.getAttribute("staffsid") != null) {
             List<orderstaff> orderstaffss = new ArrayList<>();
             try{
