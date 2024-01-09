@@ -6,8 +6,8 @@ public class User {
     public String email;
     public String password;
 
-    public User(){
-        
+    public User() {
+
     }
 
     public User(int userid, String fullname, String email, String password) {
@@ -16,7 +16,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
 
     public int getUserid() {
         return this.userid;
@@ -50,5 +49,4 @@ public class User {
         this.password = password;
     }
 
-   
 }

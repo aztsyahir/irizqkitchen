@@ -4,7 +4,6 @@ import java.sql.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
-
 public class orderstaff {
     public int orderid;
     public String fullname;
@@ -14,19 +13,19 @@ public class orderstaff {
     public int orderprice;
     public int paymentamt;
     public Date paymentdate;
-    
+
     public byte[] paymentproof;
     public MultipartFile paymentproofs;
     String paymentprf;
 
     public String orderstatus;
 
-
     public orderstaff() {
     }
 
-
-    public orderstaff(int orderid, String fullname, String custaddress, String proname, int orderdetailsqty, int orderprice, int paymentamt, Date paymentdate, byte[] paymentproof, MultipartFile paymentproofs, String paymentprf, String orderstatus) {
+    public orderstaff(int orderid, String fullname, String custaddress, String proname, int orderdetailsqty,
+            int orderprice, int paymentamt, Date paymentdate, byte[] paymentproof, MultipartFile paymentproofs,
+            String paymentprf, String orderstatus) {
         this.orderid = orderid;
         this.fullname = fullname;
         this.custaddress = custaddress;
@@ -41,7 +40,7 @@ public class orderstaff {
         this.orderstatus = orderstatus;
     }
 
-    public orderstaff(int orderid,String proname,int orderdetailsqty,int orderprice,String orderstatus){
+    public orderstaff(int orderid, String proname, int orderdetailsqty, int orderprice, String orderstatus) {
         this.orderid = orderid;
         this.proname = proname;
         this.orderdetailsqty = orderdetailsqty;
@@ -144,7 +143,5 @@ public class orderstaff {
     public void setOrderstatus(String orderstatus) {
         this.orderstatus = orderstatus;
     }
-
-    
 
 }

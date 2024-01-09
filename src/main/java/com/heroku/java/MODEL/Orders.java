@@ -9,11 +9,10 @@ public class Orders {
     public int orderprice;
     public String orderstatus;
 
-    //default constructor
-    public Orders(){
+    // default constructor
+    public Orders() {
 
     }
-
 
     public Orders(int orderid, Date orderdate, int orderprice, String orderstatus) {
         this.orderid = orderid;
@@ -21,7 +20,6 @@ public class Orders {
         this.orderprice = orderprice;
         this.orderstatus = orderstatus;
     }
-    
 
     public int getOrderid() {
         return this.orderid;
@@ -55,5 +53,4 @@ public class Orders {
         this.orderstatus = orderstatus;
     }
 
-    
 }

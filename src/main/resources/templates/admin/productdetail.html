@@ -44,7 +44,7 @@
       th:object="${product}">
       <div class="card col-5">
         <div class="card-body">
-          <input type="hidden" name="proid" th:value="${product.proid}" >
+          <input type="hidden" name="proid" th:value="${product.proid}">
           <div class="mb-3">
             <label for="proname" class="form-label ">Product Name:</label>
             <input type="text" name="proname" class="form-control" th:value="${product.proname}">
@@ -61,21 +61,19 @@
             <label for="productsname" class="form-label ">Cake Size:</label>
             <input class="form-control-plaintext " type="text" th:value="${product.cakesize}" readonly>
             <select class="form-select" name="cakesize" id="cakesize" th:value="${product.cakesize}">
-              <option type="number" value="6" >6"</option>
-              <option type="number" value="8">8"</option> 
+              <option type="number" value="6">6"</option>
+              <option type="number" value="8">8"</option>
             </select>
           </th:block>
 
           <th:block th:if="${product.protype == 'cupcake'}">
             <label for="productsname" class="form-label ">Cupcake Topping</label>
             <input class="form-control-plaintext d-flex " type="text" th:value="${product.cuptoppings}" readonly>
-            <select class="form-select" 
-            name="cuptoppings"
-            id="cuptoppings">
-            <option type="text" value="chocchips"selected>Choc Chips</option>
-            <option type="text" value="sprinkles">Sprinkles</option>
-            <option type="text" value="marshmallow">Marshmallow</option>
-          </select>
+            <select class="form-select" name="cuptoppings" id="cuptoppings">
+              <option type="text" value="chocchips" selected>Choc Chips</option>
+              <option type="text" value="sprinkles">Sprinkles</option>
+              <option type="text" value="marshmallow">Marshmallow</option>
+            </select>
           </th:block>
 
           <div class="d-flex justify-content-center">

@@ -1,23 +1,20 @@
 package com.heroku.java.MODEL;
 
-public class customer extends User{
-    
+public class customer extends User {
+
     public String custaddress;
     public String custphone;
-    
-    //constructor
-    public customer(){
+
+    // constructor
+    public customer() {
 
     }
 
-    
-
-    public customer(int userid,String fullname,String email,String password,String custaddress, String custphone) {
+    public customer(int userid, String fullname, String email, String password, String custaddress, String custphone) {
         super(userid, fullname, email, password);
         this.custaddress = custaddress;
         this.custphone = custphone;
     }
-
 
     public String getCustaddress() {
         return this.custaddress;

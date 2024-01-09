@@ -45,12 +45,11 @@ public class GettingStartedApplication {
     public String about() {
         return "user/about";
     }
-    
+
     @GetMapping("/customerregister")
     public String custregister() {
         return "user/customerregister";
     }
-
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

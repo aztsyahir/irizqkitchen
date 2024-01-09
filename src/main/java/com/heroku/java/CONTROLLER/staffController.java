@@ -64,19 +64,20 @@ public class staffController {
 
                 staffs.add(new staff(userid, fullname, email, password, role));
                 model.addAttribute("staffs", staffs);
-                model.addAttribute("isAdmin", staffsrole != null && staffsrole.equals("admin")); // Add isAdmin flag to the modelF
+                model.addAttribute("isAdmin", staffsrole != null && staffsrole.equals("admin")); // Add isAdmin flag to
+                                                                                                 // the modelF
 
             }
 
             connection.close();
 
-         return "admin/stafflist";
+            return "admin/stafflist";
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception as desired (e.g., show an error message)
             return "error";
         }
-        
+
     }
 
     @GetMapping("/deletestaff/")
@@ -102,7 +103,6 @@ public class staffController {
                     return "redirect:/stafflist"; // Redirect to an error page or show an error message
                 }
 
-
             } catch (SQLException e) {
                 e.printStackTrace();
                 // Handle the exception as desired (e.g., show an error message)
@@ -119,9 +119,9 @@ public class staffController {
         String fullname = (String) session.getAttribute("staffsname");
         int userid = (int) session.getAttribute("staffsid");
 
-        //debug
-        System.out.println("fullname : "+fullname);
-        System.out.println("userid : "+ userid);
+        // debug
+        System.out.println("fullname : " + fullname);
+        System.out.println("userid : " + userid);
         try {
             Connection connection = dataSource.getConnection();
             String sql1 = "INSERT INTO staffs (staffsname, staffsemail, staffspassword, staffsrole,managersid) VALUES (?,?,?,?,?)";
@@ -201,7 +201,6 @@ public class staffController {
         } else {
             return "login";
         }
-        
 
     }
 
@@ -218,24 +217,24 @@ public class staffController {
         // debug
         System.out.println("id update = " + staffsid);
         System.out.println("role update = " + staffsrole);
-        
+
         try {
             Connection connection = dataSource.getConnection();
             String sql1 = "UPDATE staffs SET staffsname=? ,staffsemail=?, staffsrole=?, staffspassword=? WHERE staffsid=?";
             final var statement = connection.prepareStatement(sql1);
 
-                statement.setString(1, staffsname);
-                statement.setString(2, staffsemail);
-                statement.setString(3, staffsrole);
-                statement.setString(4, staffspassword);
-                statement.setInt(5, staffsid);
-                statement.executeUpdate();
-            System.out.println("debug= " + staffsid + " " + staffsname + " " + staffsrole + " " + staffsemail + " " + staffspassword);
+            statement.setString(1, staffsname);
+            statement.setString(2, staffsemail);
+            statement.setString(3, staffsrole);
+            statement.setString(4, staffspassword);
+            statement.setInt(5, staffsid);
+            statement.executeUpdate();
+            System.out.println("debug= " + staffsid + " " + staffsname + " " + staffsrole + " " + staffsemail + " "
+                    + staffspassword);
 
             connection.close();
 
-            String returnPage = "staffprofile";
-            return returnPage;
+            return "redirect:/staffprofile?success=true";
 
         } catch (Throwable t) {
             System.out.println("message : " + t.getMessage());
@@ -261,16 +260,16 @@ public class staffController {
                 if (userRowsAffected > 0) {
                     // Deletion successful
                     // You can redirect to a success page or perform any other desired actions
-                    
+
                     session.invalidate();
                     connection.close();
                     return "redirect:/";
                 } else {
                     // Deletion failed
                     connection.close();
-                     System.out.println("Delete Failed");
+                    System.out.println("Delete Failed");
                     return "admin/deletestaff";
-                   
+
                 }
             } catch (SQLException e) {
                 // Handle any potential exceptions (e.g., log the error, display an error page)
@@ -285,7 +284,5 @@ public class staffController {
         // error page)
         return "staff/stafforder";
     }
-
-   
 
 }

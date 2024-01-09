@@ -5,7 +5,7 @@ import java.sql.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 public class payments {
-    
+
     public int paymentid;
     public int paymentamt;
     public Date paymentdate;
@@ -13,12 +13,12 @@ public class payments {
     public MultipartFile paymentproofs;
     public String paymentprf;
 
-    public payments(){
+    public payments() {
 
     }
 
-
-    public payments(int paymentid, int paymentamt, Date paymentdate, byte[] paymentproof, MultipartFile paymentproofs, String paymentprf) {
+    public payments(int paymentid, int paymentamt, Date paymentdate, byte[] paymentproof, MultipartFile paymentproofs,
+            String paymentprf) {
         this.paymentid = paymentid;
         this.paymentamt = paymentamt;
         this.paymentdate = paymentdate;
@@ -26,7 +26,6 @@ public class payments {
         this.paymentproofs = paymentproofs;
         this.paymentprf = paymentprf;
     }
-
 
     public int getPaymentid() {
         return this.paymentid;

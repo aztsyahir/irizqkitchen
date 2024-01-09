@@ -145,37 +145,41 @@
                   <strong>Order Here</strong>
                 </button>
 
-                      <div class="offcanvas offcanvas-end" tabindex="-1" th:id="'offcanvasRight-' + ${cupcake.proid}" th:aria-labelledby="'offcanvasRightLabel-' + ${cupcake.proid}">
-                        <div class="offcanvas-header">
-                        <h2 class="offcanvas-title1" id="offcanvasRightLabel1-[[${cupcake.proid}]]" th:text="${cupcake.proname}"></h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" th:id="'offcanvasRight-' + ${cupcake.proid}"
+                  th:aria-labelledby="'offcanvasRightLabel-' + ${cupcake.proid}">
+                  <div class="offcanvas-header">
+                    <h2 class="offcanvas-title1" id="offcanvasRightLabel1-[[${cupcake.proid}]]"
+                      th:text="${cupcake.proname}"></h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+
+                  <div class="offcanvas-body">
+                    <div class="panel"><img th:src="${cupcake.proimage}" alt="Product Image"
+                        style="width: 200px; height: 200px; "></div>
+                    <div class="myForm1">
+                      <h3 class="offcanvas-title1" id="offcanvasRightLabel">Order Details</h3><br><br>
+                      <form id="myForm1" th:action="@{/orderproduct}" method="post" modelAttribute="catalogue"
+                        th:object="(${catalogue})">
+                        <label for="cakesize">Topping: </label>
+                        <input class="form-control-plaintext" type="text" th:value="${cupcake.cuptoppings}" readonly
+                          style="text-align: center;">
+                        <label for="cakeqty">Quantity: </label>
+                        <input type="number" name="quantity" id="cupcakeqty1" placeholder="eg. 1" min="1"
+                          style="background-color: #fff3d7;"><br>
+                        <input type="hidden" name="proprice" th:value="${cupcake.proprice}" />
+                        <input type="hidden" name="proid" th:value="${cupcake.proid}" />
+                        <div class="submitOrder1" id="submitOrder1">
+                          <button type="submit"
+                            style="color: #000000; font-weight: 800; border: 1px solid #f9eaa7; border-radius: 15px; background-color: #f9eaa7; padding: 8px 30%;">Place
+                            Order</button>
                         </div>
-          
-                        <div class="offcanvas-body">
-                          <div class="panel"><img th:src="${cupcake.proimage}" alt="Product Image" style="width: 200px; height: 200px; "></div>
-                          <div class="myForm1">
-                            <h3 class="offcanvas-title1" id="offcanvasRightLabel">Order Details</h3><br><br>
-                            <form id="myForm1" 
-                            th:action="@{/orderproduct}"
-                            method="post"
-                            modelAttribute="catalogue"
-                            th:object="(${catalogue})">
-                              <label for="cakesize">Topping: </label>
-                              <input class="form-control-plaintext" type="text" th:value="${cupcake.cuptoppings}"  readonly style="text-align: center;">
-                              <label for="cakeqty">Quantity: </label>
-                              <input type="number" name="quantity" id="cupcakeqty1" placeholder="eg. 1" min="1" style="background-color: #fff3d7;" ><br>
-                              <input type="hidden" name="proprice" th:value="${cupcake.proprice}" />
-                              <input type="hidden" name="proid" th:value="${cupcake.proid}" />
-                              <div class="submitOrder1" id="submitOrder1">
-                                <button type="submit" style="color: #000000; font-weight: 800; border: 1px solid #f9eaa7; border-radius: 15px; background-color: #f9eaa7; padding: 8px 30%;">Place Order</button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                </tr>
-            </tbody>  
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
