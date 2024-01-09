@@ -50,7 +50,7 @@ public class productsController {
     }
 
     @PostMapping("/cakeregister")
-    public String AddCake(HttpSession session,  @ModelAttribute("cakeregister")Products products,  @RequestParam("proimgs") MultipartFile proimgs,Cakes cake, Cupcakes cupcake){
+    public String AddCake(HttpSession session, Model model, @ModelAttribute("cakeregister")Products products,  @RequestParam("proimgs") MultipartFile proimgs,Cakes cake, Cupcakes cupcake){
 
         try {
             Connection connection = dataSource.getConnection();
@@ -115,17 +115,18 @@ public class productsController {
         statement3.executeUpdate();
         System.out.println("cupcake topping 2: "+cuptopping);
       }
-      connection.close();
+      model.addAttribute("success", true);
+
         
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/cakeregister";
+            return "redirect:/cakeregister?success=false";
         }
-         return "redirect:/staffmenu";
+         return "redirect:/staffmenu?success=true";
     }
 
       @GetMapping("/staffmenu")
-      public String productList(HttpSession session, Model model ,Cakes cake,Cupcakes cupcake) {
+      public String productList(@RequestParam(name = "success", required = false)Boolean success, HttpSession session, Model model ,Cakes cake,Cupcakes cupcake) {
         // String staffsrole = (String) session.getAttribute("staffsid");
           List<Cakes> cakes = new ArrayList<>();
           List<Cupcakes> cupcakes = new ArrayList<>();
@@ -191,6 +192,9 @@ public class productsController {
                   }
 
                 }
+                if (success != null && success) {
+                  model.addAttribute("success", true);
+              }
           
           model.addAttribute("cakes", cakes);
           model.addAttribute("cupcakes", cupcakes);
@@ -246,30 +250,51 @@ public class productsController {
       }
 
       @PostMapping("/updateproduct")
-        public String UpdateProduct(@ModelAttribute("product") Products product ){
+        public String UpdateProduct(@ModelAttribute("product") Products product,Cakes cake, Cupcakes cupcake){
           System.out.println("pass here <<<<<<<");
           try{
             Connection connection = dataSource.getConnection();
-            String sql = "UPDATE products SET proprice =? WHERE proid=?";
+            String sql = "UPDATE products SET proname=?, proprice=? WHERE proid=?";
             final var statement = connection.prepareStatement(sql);
-            int proprice = product.getProprice();
-            int proid = product.getProid();
+            statement.setString(1, product.getProname());
+            statement.setInt(2, product.getProprice());
+            statement.setInt(3, product.getProid());
 
-            //debug
-            System.out.println("pro price update : "+proprice);
-            System.out.println("pro id update : "+proid);
-
-            statement.setInt(1, proprice);
-            statement.setInt(2, proid);
+             // Debug
+        System.out.println("pro name update: " + product.getProname());
+        System.out.println("pro price update: " + product.getProprice());
 
             statement.executeUpdate();
+
+            // Update fields specific to "cake" or "cupcake" based on the product type
+        if ("cake".equalsIgnoreCase(product.getProtype())) {
+          String cakeSql = "UPDATE cakes SET cakesize=? WHERE proid=?";
+          final var cakeStatement = connection.prepareStatement(cakeSql);
+          cakeStatement.setInt(1, cake.getCakesize());
+          cakeStatement.setInt(2, product.getProid());
+
+          // Debug
+          System.out.println("cake size update: " + cake.getCakesize());
+
+          cakeStatement.executeUpdate();
+      } else if ("cupcake".equalsIgnoreCase(product.getProtype())) {
+          String cupcakeSql = "UPDATE cupcakes SET cuptoppings=? WHERE proid=?";
+          final var cupcakeStatement = connection.prepareStatement(cupcakeSql);
+          cupcakeStatement.setString(1, cupcake.getCuptoppings());
+          cupcakeStatement.setInt(2, product.getProid());
+
+          // Debug
+          System.out.println("cupcake toping update: " + cupcake.getCuptoppings());
+
+          cupcakeStatement.executeUpdate();
+      }
             
             connection.close();
 
           }catch(Exception e){
             e.printStackTrace();
           }
-            return "redirect:/staffmenu";
+            return "redirect:/staffmenu?success=true";
         }
       
           @GetMapping("/deletemenu")
@@ -306,7 +331,7 @@ public class productsController {
               } catch (Exception e) {
                 e.printStackTrace();
               }
-              return "redirect:/staffmenu";
+              return "redirect:/staffmenu?success=true";
           } 
 
 }

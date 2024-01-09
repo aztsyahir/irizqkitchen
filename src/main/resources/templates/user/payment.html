@@ -50,12 +50,13 @@
       <div class="card col-4 " style="background: #f2e8b9;">
       <div class="card-body">
       <div class="mb-3 d-flex justify-content-center">
-        <label for="custname" class="col-sm-2 col-form-label d-flex justify-content-center" style="font-size: 14px; font-weight: bold;">Product Name :</label>
+        <label for="custname" class="col-sm-5 col-form-label d-flex justify-content-center" style="font-size: 14px; font-weight: bold;">Product Name :</label>
         <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext d-flex justify-content-center" name="proname" style="font-size: 12px;" id="proname" th:value="${session.proname}">
+          <input type="text" readonly class="form-control-plaintext d-flex justify-content-center" 
+          name="proname" style="font-size: 14px; font-weight: bold;" id="proname" th:value="${session.proname}">
         <input type="hidden"
                readonly class="form-control-plaintext" 
-               name="orderid" style="font-size: 12px;" 
+               name="orderid" style="font-size: 14px; font-weight: bold;" 
                id="orderid" th:value="${orders.orderid}">
         </div>
         <input type="hidden" name="proname" th:value="${session.proname}" />
@@ -63,45 +64,45 @@
 
       <div class="mb-3 d-flex justify-content-center">
         <label for="staticEmail" 
-               class="col-sm-2 col-form-label d-flex justify-content-center" 
+               class="col-sm-5 col-form-label d-flex justify-content-center" 
                style="font-size: 14px; font-weight: bold;">Quantity :</label>
         <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext" name="orderdetailsqty" style="font-size: 12px;" id="orderdetailsqty" th:value="${session.orderdetailsqty}">
+          <input type="text" readonly class="form-control-plaintext" name="orderdetailsqty" style="font-size: 14px; font-weight: bold;" id="orderdetailsqty" th:value="${session.orderdetailsqty}">
         </div>
       </div>
       <div class="mb-3 d-flex justify-content-center">
         <label for="staticEmail" 
-               class="col-sm-2 col-form-label d-flex justify-content-center" 
+               class="col-sm-5 col-form-label d-flex justify-content-center" 
                style="font-size: 14px; font-weight: bold;">Customer Name :</label>
         <div class="col-sm-10">
         <input type="text" 
                readonly class="form-control-plaintext" 
-               name="fullname" style="font-size: 12px;" 
+               name="fullname" style="font-size: 14px; font-weight: bold;" 
                id="fullname" th:value="${customers.fullname}">
         </div>
       </div>
       <div class="mb-3 d-flex justify-content-center">
         <label for="staticEmail"
-               class="col-sm-2 col-form-label d-flex justify-content-center" 
+               class="col-sm-5 col-form-label d-flex justify-content-center" 
                style="font-size: 14px; font-weight: bold;">Customer Address :</label>
         <div class="col-sm-10">
         <input type="text" 
                readonly class="form-control-plaintext" 
-               name="custaddress" style="font-size: 12px;" 
+               name="custaddress" style="font-size: 14px; font-weight: bold;" 
                id="custaddres" th:value="${customers.custaddress}">
         </div>
       </div>
       <div class="mb-3 d-flex justify-content-center">
         <label for="staticEmail" 
-               class="col-sm-2 col-form-label d-flex justify-content-center" 
+               class="col-sm-5 col-form-label d-flex justify-content-center" 
                style="font-size: 14px; font-weight: bold;">Price :</label>
         <div class="col-sm-10">
-          <input type="text" readonly class="form-control-plaintext" name="orderprice" style="font-size: 12px;" id="orderprice" th:value="${session.orderprice}">
+          <input type="text" readonly class="form-control-plaintext" name="orderprice" style="font-size: 14px; font-weight: bold;" id="orderprice" th:value="${session.orderprice}">
         </div>
       </div>
       <div class="mb-3 d-flex justify-content-center">
         <label for="formFile" 
-        class="form-label" style="font-weight: bold; font-size: 14px;">Payment Proof(JPEG only) </label>
+        class="form-label" style="font-weight: bold; font-size: 14px;">Payment Proof </label>
         <div>
         <input class="form-control" 
                type="file" name="paymentproofs" 
