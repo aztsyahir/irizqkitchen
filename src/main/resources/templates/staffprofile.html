@@ -137,21 +137,21 @@
     integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
     crossorigin="anonymous"></script>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const toastLiveExample = document.getElementById("liveToast1");
-        const toastBootstrap = new bootstrap.Toast(toastLiveExample);
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toastLiveExample = document.getElementById("liveToast1");
+      const toastBootstrap = new bootstrap.Toast(toastLiveExample);
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const successParam = urlParams.get('success');
+      const urlParams = new URLSearchParams(window.location.search);
+      const successParam = urlParams.get('success');
 
-        if (successParam !== null && successParam === 'true') {
-          toastBootstrap.show();
-          document.getElementById("display-message").innerHTML = "Account update successfully!";
-        } else if (successParam !== null && successParam === 'false') {
-          toastBootstrap.show();
-          document.getElementById("display-message").innerHTML = "Sorry, you already have order history, cannot delete profile";
-        }
-      });
-    </script>
+      if (successParam !== null && successParam === 'true') {
+        toastBootstrap.show();
+        document.getElementById("display-message").innerHTML = "Account update successfully!";
+      } else if (successParam !== null && successParam === 'false') {
+        toastBootstrap.show();
+        document.getElementById("display-message").innerHTML = "Sorry, you already have order history, cannot delete profile";
+      }
+    });
+  </script>
 </body>
