@@ -78,7 +78,7 @@
 
           <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-warning align-items-center">SAVE</button>
-          </div>
+            <button type="button" class="btn btn-primary" onclick="return confirmCancel()">Cancel</button>
         </div>
       </div>
     </form>
@@ -95,4 +95,15 @@
     integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
     crossorigin="anonymous"></script>
 
+    <script>
+      function confirmCancel() {
+        // Show a confirmation dialog
+        var userConfirmed = confirm("Are you sure you want to cancel update product?");
+
+        // If the user confirmed, navigate to '/staffmenu'
+        if (userConfirmed) {
+            window.location.href = '/staffmenu';
+        }
+      }
+    </script>
 </body>
